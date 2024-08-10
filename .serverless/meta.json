@@ -1,16 +1,15 @@
 {
   "unknown": {
     "versionSfCore": null,
-    "versionFramework": "4.1.19",
+    "versionFramework": "4.1.21",
     "isWithinCompose": false,
     "composeOrgName": null,
     "composeServiceName": null,
     "command": [],
-    "options": {},
-    "error": {
-      "message": "Failed to download and install template from https://github.com/serverless/examples/tree/v4/aws-node-http-api due to A folder named \"C:\\Users\\oliph\\Documents\\Programming\\meet\\meet\" already exists.",
-      "stack": "Error: Failed to download and install template from https://github.com/serverless/examples/tree/v4/aws-node-http-api due to A folder named \"C:\\Users\\oliph\\Documents\\Programming\\meet\\meet\" already exists.\n    at routeNew (file:///C:/Users/oliph/.serverless/releases/4.1.19/package/dist/sf-core.js:880:6285)\n    at async commandOnboarding (file:///C:/Users/oliph/.serverless/releases/4.1.19/package/dist/sf-core.js:880:5024)\n    at async catchAllHandler (file:///C:/Users/oliph/.serverless/releases/4.1.19/package/dist/sf-core.js:905:19748)\n    at async runCommand (file:///C:/Users/oliph/.serverless/releases/4.1.19/package/dist/sf-core.js:909:4100)\n    at async route (file:///C:/Users/oliph/.serverless/releases/4.1.19/package/dist/sf-core.js:920:14797)\n    at async Object.run2 [as run] (file:///C:/Users/oliph/.serverless/releases/4.1.19/package/dist/sf-core.js:920:16702)\n    at async run3 (file:///C:/Users/oliph/.serverless/releases/4.1.19/package/dist/sf-core.js:920:17962)"
+    "options": {
+      "version": true
     },
+    "error": null,
     "machineId": "53745f6bbfb8be66ab0cc686e5ad25c0",
     "serviceProviderAwsCfStackId": null,
     "serviceProviderAwsCfStackCreated": null,
