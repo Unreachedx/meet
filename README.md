@@ -15,7 +15,7 @@ Feature 4: Use the App When Offline
 
 User Story:
 As a user,
-I should be able to use the app when offline
+I should be able to use the app when offline.
 So that I can access event information without an internet connection.
 Feature 5: Add an App Shortcut to the Home Screen
 
