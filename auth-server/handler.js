@@ -2,6 +2,11 @@
 
 const { google } = require("googleapis");
 const calendar = google.calendar("v3");
+const dotenv = require('dotenv');
+
+// Load environment variables from .env file
+dotenv.config();
+
 const SCOPES = ["https://www.googleapis.com/auth/calendar.events.public.readonly"];
 const { CLIENT_SECRET, CLIENT_ID, CALENDAR_ID } = process.env;
 const redirect_uris = [
@@ -72,7 +77,7 @@ module.exports.getCalendarEvents = async (event) => {
 
       oAuth2Client.setCredentials({ access_token });
 
-      // Get Callender events
+      // Get Calendar events
       calendar.events.list(
         {
           calendarId: CALENDAR_ID,
