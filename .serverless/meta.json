@@ -1,0 +1,138 @@
+{
+  "unknown": {
+    "versionSfCore": null,
+    "versionFramework": "4.1.21",
+    "isWithinCompose": false,
+    "composeOrgName": null,
+    "composeServiceName": null,
+    "command": [],
+    "options": {
+      "version": true
+    },
+    "error": null,
+    "machineId": "53745f6bbfb8be66ab0cc686e5ad25c0",
+    "serviceProviderAwsCfStackId": null,
+    "serviceProviderAwsCfStackCreated": null,
+    "serviceProviderAwsCfStackUpdated": null,
+    "serviceProviderAwsCfStackStatus": null,
+    "serviceProviderAwsCfStackOutputs": null
+  },
+  "C:\\Users\\oliph\\Documents\\Programming\\meet": {
+    "versionSfCore": null,
+    "versionFramework": "4.1.19",
+    "isWithinCompose": false,
+    "isCompose": false,
+    "composeOrgName": null,
+    "composeResolverProviders": {
+      "aws": {
+        "instance": {
+          "credentials": "<REDACTED>",
+          "serviceConfigFile": {
+            "org": "paddy90",
+            "app": "meet",
+            "service": "meet",
+            "provider": {
+              "name": "aws",
+              "runtime": "nodejs14.x",
+              "stage": "dev",
+              "region": "us-east-1",
+              "versionFunctions": true
+            },
+            "functions": {
+              "hello": {
+                "handler": "handler.hello",
+                "events": [
+                  {
+                    "http": {
+                      "path": "hello",
+                      "method": "get"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "configFileDirPath": "C:\\Users\\oliph\\Documents\\Programming\\meet",
+          "config": {
+            "type": "aws"
+          },
+          "options": {
+            "template": "aws-nodejs"
+          },
+          "stage": "dev",
+          "dashboard": null,
+          "isDefaultConfig": true
+        },
+        "resolvers": {}
+      }
+    },
+    "composeServiceName": null,
+    "servicePath": "C:\\Users\\oliph\\Documents\\Programming\\meet",
+    "serviceConfigFileName": "serverless.yml",
+    "service": {
+      "org": "paddy90",
+      "app": "meet",
+      "service": "meet",
+      "provider": {
+        "name": "aws",
+        "runtime": "nodejs14.x",
+        "stage": "dev",
+        "region": "us-east-1",
+        "versionFunctions": true
+      },
+      "functions": {
+        "hello": {
+          "handler": "handler.hello",
+          "events": [
+            {
+              "http": {
+                "path": "hello",
+                "method": "get"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "serviceRawFile": "# \"org\" ensures this Service is used with the correct Serverless Framework Access Key.\norg: paddy90\n# \"app\" enables Serverless Framework Dashboard features and sharing them with other Services.\napp: meet\nservice: meet\r\n\r\nprovider:\r\n  name: aws\r\n  runtime: nodejs14.x\r\n\r\nfunctions:\r\n  hello:\r\n    handler: handler.hello\r\n    events:\r\n      - http:\r\n          path: hello\r\n          method: get",
+    "command": [
+      "create"
+    ],
+    "options": {
+      "template": "aws-nodejs"
+    },
+    "error": {
+      "message": "The \"create\" command was deprecated in v4. To create a new project, run the \"serverless\" command instead.",
+      "code": "UNRECOGNIZED_CLI_COMMAND"
+    },
+    "params": {},
+    "machineId": "53745f6bbfb8be66ab0cc686e5ad25c0",
+    "accessKeyV2": "<REDACTED>",
+    "accessKeyV1": "<REDACTED>",
+    "orgId": "273c50d6-80d7-4299-b255-59e9a1b92afd",
+    "orgName": "paddy90",
+    "userId": "5Ps6Txjs9ctgcxjtNY",
+    "dashboard": {
+      "isEnabledForService": true,
+      "requiredAuthentication": false,
+      "orgFeaturesInUse": {
+        "providers": false,
+        "monitoring": false
+      },
+      "orgObservabilityIntegrations": null,
+      "serviceAppId": "L7f90VzVp2fDmgp8YK",
+      "serviceProvider": null,
+      "instanceParameters": null
+    },
+    "userName": "paddy90",
+    "subscription": null,
+    "userEmail": "unreached1@gmail.com",
+    "versionSf": "4.1.19",
+    "serviceProviderAwsCfStackName": "meet-dev",
+    "serviceProviderAwsCfStackId": null,
+    "serviceProviderAwsCfStackCreated": null,
+    "serviceProviderAwsCfStackUpdated": null,
+    "serviceProviderAwsCfStackStatus": null,
+    "serviceProviderAwsCfStackOutputs": null
+  }
+}
