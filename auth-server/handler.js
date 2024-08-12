@@ -62,10 +62,22 @@ module.exports.getAccessToken = async (event) => {
 };
 
 module.exports.getCalendarEvents = async (event) => {
-  const access_token = decodeURIComponent(
-    `${event.pathParameters.access_token}`
-  );
+  const access_token = decodeURIComponent(`${event.pathParameters.access_token}`);
   oAuth2Client.setCredentials({ access_token });
+
+  // Handle CORS preflight request
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Access-Control-Allow-Credentials": true,
+      },
+      body: JSON.stringify({ message: 'CORS preflight' }),
+    };
+  }
 
   return new Promise((resolve, reject) => {
     calendar.events.list(
@@ -96,9 +108,12 @@ module.exports.getCalendarEvents = async (event) => {
       };
     })
     .catch((error) => {
-      // Handle error
       return {
         statusCode: 500,
+        headers: {
+          "Access-Control-Allow-Origin": "*", // Ensure CORS header on error response
+          "Access-Control-Allow-Credentials": true,
+        },
         body: JSON.stringify(error),
       };
     });
