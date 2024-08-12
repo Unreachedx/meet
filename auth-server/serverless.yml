@@ -1,7 +1,10 @@
+
 service: auth-server
+# app and org for use with dashboard.serverless.com
+#app: your-app-name
+#org: your-org-name
 
 frameworkVersion: "3"
-
 provider:
   name: aws
   runtime: nodejs18.x
