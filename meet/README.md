@@ -1,69 +1,92 @@
-<!--
-title: 'AWS Simple HTTP Endpoint example in NodeJS'
-description: 'This template demonstrates how to make a simple HTTP API with Node.js running on AWS Lambda and API Gateway using the Serverless Framework.'
-layout: Doc
-framework: v4
-platform: AWS
-language: nodeJS
-authorLink: 'https://github.com/serverless'
-authorName: 'Serverless, Inc.'
-authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4'
--->
+User Stories
+Feature 2: Show/Hide Event Details
 
-# Serverless Framework Node HTTP API on AWS
+User Story:
+As a user,
+I should be able to show or hide event details
+So that I can view more or less information about an event as needed.
+Feature 3: Specify Number of Events
 
-This template demonstrates how to make a simple HTTP API with Node.js running on AWS Lambda and API Gateway using the Serverless Framework.
+User Story:
+As a user,
+I should be able to specify the number of events displayed
+So that I can control how many events I see at one time.
+Feature 4: Use the App When Offline
 
-This template does not include any kind of persistence (database). For more advanced examples, check out the [serverless/examples repository](https://github.com/serverless/examples/) which includes Typescript, Mongo, DynamoDB and other examples.
+User Story:
+As a user,
+I should be able to use the app when offline.
+So that I can access event information without an internet connection.
+Feature 5: Add an App Shortcut to the Home Screen
 
-## Usage
+User Story:
+As a user,
+I should be able to add an app shortcut to the home screen
+So that I can quickly access the app directly from my home screen.
+Feature 6: Display Charts Visualizing Event Details
 
-### Deployment
+User Story:
+As a user,
+I should be able to view charts visualizing event details
+So that I can better understand the information about events through visual representation.
+Gherkin Scenarios
+Feature 2: Show/Hide Event Details
 
-In order to deploy the example, you need to run the following command:
+Scenario 1: Show event details
 
-```
-serverless deploy
-```
+Given I am on the event list page
+When I click on the "Show Details" button for an event
+Then I should see the detailed information for that event.
+Scenario 2: Hide event details
 
-After running deploy, you should see output similar to:
+Given I am viewing the detailed information for an event
+When I click on the "Hide Details" button for that event
+Then the detailed information for that event should be hidden.
+Feature 3: Specify Number of Events
 
-```
-Deploying "serverless-http-api" to stage "dev" (us-east-1)
+Scenario 1: Specify number of events to display
 
-✔ Service deployed to stack serverless-http-api-dev (91s)
+Given I am on the settings page
+When I select a number from the "Number of Events to Display" dropdown
+Then I should see only the specified number of events on the event list page.
+Scenario 2: Default number of events displayed
 
-endpoint: GET - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/
-functions:
-  hello: serverless-http-api-dev-hello (1.6 kB)
-```
+Given I am a new user
+When I first open the app
+Then I should see the default number of events displayed on the event list page.
+Feature 4: Use the App When Offline
 
-_Note_: In current form, after deployment, your API is public and can be invoked by anyone. For production deployments, you might want to configure an authorizer. For details on how to do that, refer to [HTTP API (API Gateway V2) event docs](https://www.serverless.com/framework/docs/providers/aws/events/http-api).
+Scenario 1: Access event information offline
 
-### Invocation
+Given I have previously accessed the app while online
+When I lose internet connection and open the app
+Then I should be able to see the event information that was last loaded.
+Scenario 2: Offline notification
 
-After successful deployment, you can call the created application via HTTP:
+Given I am offline
+When I try to access new event information
+Then I should receive a notification that I am offline and cannot load new events.
+Feature 5: Add an App Shortcut to the Home Screen
 
-```
-curl https://xxxxxxx.execute-api.us-east-1.amazonaws.com/
-```
+Scenario 1: Add shortcut to home screen
 
-Which should result in response similar to:
+Given I am using the app in a web browser
+When I select the "Add to Home Screen" option from the browser menu
+Then an app shortcut should be added to my device's home screen.
+Scenario 2: Access app from home screen shortcut
 
-```json
-{ "message": "Go Serverless v4! Your function executed successfully!" }
-```
+Given I have added an app shortcut to my home screen
+When I tap the app shortcut
+Then the app should open directly.
+Feature 6: Display Charts Visualizing Event Details
 
-### Local development
+Scenario 1: View event details chart
 
-The easiest way to develop and test your function is to use the `dev` command:
+Given I am on the event details page
+When I scroll down to the "Charts" section
+Then I should see a chart visualizing specific details of the event.
+Scenario 2: No data available for charts
 
-```
-serverless dev
-```
-
-This will start a local emulator of AWS Lambda and tunnel your requests to and from AWS Lambda, allowing you to interact with your function as if it were running in the cloud.
-
-Now you can invoke the function as before, but this time the function will be executed locally. Now you can develop your function locally, invoke it, and see the results immediately without having to re-deploy.
-
-When you are done developing, don't forget to run `serverless deploy` to deploy the function to the cloud.
+Given I am on the event details page
+When there is no data available for the charts
+Then I should see a message indicating that there is no data available for visualization.
