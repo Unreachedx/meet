@@ -21,9 +21,8 @@ test('input field value changes when user types', async () => {
   const inputElement = getByRole('textbox');
   
   // Simulate typing '10' into the input field
-  await user.clear(inputElement);  // Clear the field first to avoid any interference from previous values
-  await user.type(inputElement, '10');  // Use the correct variable here
+  await user.type(inputElement, '{backspace}{backspace}10');
   
-  // Assert that the value of the input field has changed to '10'
-  expect(inputElement).toHaveValue('10');
+  expect(inputElement).toHaveValue(10);
 });
+
