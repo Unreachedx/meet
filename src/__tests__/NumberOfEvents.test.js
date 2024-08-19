@@ -12,7 +12,7 @@ test('contains an input element with the role of textbox', () => {
 test('default value of input field is 32', () => {
   const { getByRole } = render(<NumberOfEvents />);
   const inputElement = getByRole('textbox');
-  expect(inputElement).toHaveValue(32); // Ensure the expected value is a string
+  expect(inputElement).toHaveValue('32'); // Ensure the expected value is a string
 });
 
 test('input field value changes when user types', async () => {

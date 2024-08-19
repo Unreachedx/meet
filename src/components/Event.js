@@ -2,19 +2,21 @@ import React, { useState } from 'react';
 
 const Event = ({ event }) => {
   const [detailsVisible, setDetailsVisible] = useState(false);
+  const { summary, start: { dateTime, timeZone }, description } = event;
 
   const toggleDetails = () => {
-    setDetailsVisible(!detailsVisible);
+    console.log('Button clicked');
+    setDetailsVisible(prevState => !prevState);
   };
 
   return (
     <li>
-      <h3>{event.title}</h3>
-      <p>{event.date}</p>
+      <h3>{summary}</h3>
+      <p>{dateTime} {`(${timeZone})`}</p>
       <button onClick={toggleDetails}>
         {detailsVisible ? 'Hide Details' : 'Show Details'}
       </button>
-      {detailsVisible && <p>{event.description}</p>}
+      {detailsVisible && <p>{description}</p>}
     </li>
   );
 };

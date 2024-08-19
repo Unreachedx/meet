@@ -11,9 +11,9 @@ test('shows event details when "Show Details" button is clicked', () => {
   render(<Event event={event} />);
   
   // Check if the title, start time, and location are present
-  const titleElement = screen.getByText(event.title);
-  const startTimeElement = screen.getByText(event.date); // Adjust based on your actual prop names
-  const locationElement = screen.getByText(event.location); // Adjust based on your actual prop names
+  const titleElement = screen.getByText(event.summary); // Assuming summary is the correct prop
+  const startTimeElement = screen.getByText(event.start.dateTime); // Adjust based on actual prop names
+  const locationElement = screen.getByText(event.location); // Adjust based on actual prop names
   const buttonElement = screen.getByText('Show Details');
 
   expect(titleElement).toBeInTheDocument();

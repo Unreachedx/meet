@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const CitySearch = ({ allLocations }) => {
+const CitySearch = ({ allLocations, setCity }) => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
@@ -8,19 +8,20 @@ const CitySearch = ({ allLocations }) => {
   const handleInputChanged = (event) => {
     const value = event.target.value;
     const filteredLocations = allLocations
-      ? allLocations.filter((location) => {
-          return location.toUpperCase().indexOf(value.toUpperCase()) > -1;
-        })
+      ? allLocations.filter((location) =>
+          location.toUpperCase().indexOf(value.toUpperCase()) > -1
+        )
       : [];
 
     setQuery(value);
     setSuggestions(filteredLocations);
+  };
 
-    const handleItemClicked = (event) => {
-        const value = event.target.textContent;
-        setQuery(value);
-        setShowSuggestions(false); // to hide the list
-      };
+  const handleItemClicked = (event) => {
+    const value = event.target.textContent;
+    setQuery(value);
+    setShowSuggestions(false); // Hide the suggestions list
+    setCity(value); // Update the selected city in the parent component
   };
 
   return (
@@ -33,19 +34,20 @@ const CitySearch = ({ allLocations }) => {
         onFocus={() => setShowSuggestions(true)}
         onChange={handleInputChanged}
       />
-      {showSuggestions ?
+      {showSuggestions && (
         <ul className="suggestions">
-          {suggestions.map((suggestion) => {
-            return <li onClick={handleItemClicked} key={suggestion}>{suggestion}</li>
-          })}
-          <li key='See all cities' onClick={handleItemClicked}>
+          {suggestions.map((suggestion) => (
+            <li onClick={handleItemClicked} key={suggestion}>
+              {suggestion}
+            </li>
+          ))}
+          <li key="See all cities" onClick={handleItemClicked}>
             <b>See all cities</b>
           </li>
         </ul>
-        : null
-      }
+      )}
     </div>
- );
+  );
 };
 
 export default CitySearch;

@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const NumberOfEvents = ({ defaultValue = 32 }) => {
-  const [eventCount, setEventCount] = useState(defaultValue);
-
+const NumberOfEvents = ({ eventCount, setEventCount }) => {
   const handleInputChange = (event) => {
     const value = event.target.value;
-    setEventCount(value);
+    setEventCount(Number(value));
   };
 
   return (
