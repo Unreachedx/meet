@@ -1,4 +1,5 @@
 import React from 'react';
+import './NumberOfEvents.css'; // Import the CSS file for styling
 
 const NumberOfEvents = ({ eventCount, setEventCount }) => {
   const handleInputChange = (event) => {
@@ -7,10 +8,9 @@ const NumberOfEvents = ({ eventCount, setEventCount }) => {
   };
 
   return (
-    <div id="number-of-events">
+    <div className="number-of-events-container">
       <input
         type="number"
-        role="textbox"
         value={eventCount}
         onChange={handleInputChange}
       />

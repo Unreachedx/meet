@@ -22,8 +22,10 @@ const App = () => {
 
   return (
     <div className="App">
+      <h1>Meet App</h1>
+      <h3>Choose your Nearest City</h3>
       <CitySearch allLocations={events.map(event => event.location)} setCity={setCity} />
-      
+      <p>Number of Events</p>
       <NumberOfEvents eventCount={eventCount} setEventCount={setEventCount} />
       
       <EventList events={filteredEvents} />

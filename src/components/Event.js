@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './Event.css';
 
 const Event = ({ event }) => {
   const [detailsVisible, setDetailsVisible] = useState(false);
@@ -13,15 +14,15 @@ const Event = ({ event }) => {
   };
 
   return (
-    <li>
+    <div className="event-content">
       <h3>{summary}</h3>
       <p>{dateTime} ({timeZone})</p>
       <p>{location}</p>
-      <button onClick={toggleDetails}>
+      {detailsVisible && <p>{description}</p>}
+      <button className="details-button" onClick={toggleDetails}>
         {detailsVisible ? 'Hide Details' : 'Show Details'}
       </button>
-      {detailsVisible && <p>{description}</p>}
-    </li>
+    </div>
   );
 };
 

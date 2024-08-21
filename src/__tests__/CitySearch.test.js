@@ -4,6 +4,7 @@ import CitySearch from '../components/CitySearch';
 import userEvent from '@testing-library/user-event';
 import { extractLocations, getEvents } from '../api';
 
+
 describe('<CitySearch /> component', () => {
   test('renders text input', () => {
     render(<CitySearch allLocations={[]} setCity={() => {}} />);

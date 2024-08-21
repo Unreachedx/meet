@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './CitySearch.css';
 
 const CitySearch = ({ allLocations, setCity }) => {
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -21,40 +22,41 @@ const CitySearch = ({ allLocations, setCity }) => {
 
   const handleSuggestionClicked = (suggestion) => {
     setQuery(suggestion);
-    setCity(suggestion); // Update the city in the parent component
+    setCity(suggestion);
     setShowSuggestions(false);
   };
 
   const handleSeeAllClicked = () => {
     setQuery("");
-    setCity(""); // Clear city filter
+    setCity("");
     setShowSuggestions(false);
   };
 
   return (
-    <div id="city-search">
+    <div className="city-search-container">
       <input
         type="text"
-        className="city"
+        className="city-input"
         placeholder="Search for a city"
         value={query}
         onFocus={() => setShowSuggestions(true)}
         onChange={handleInputChanged}
       />
       {showSuggestions && (
-        <ul className="suggestions">
+        <div className="suggestions">
           {suggestions.map((suggestion) => (
-            <li
+            <div
               key={suggestion}
+              className="suggestion-item"
               onClick={() => handleSuggestionClicked(suggestion)}
             >
               {suggestion}
-            </li>
+            </div>
           ))}
-          <li key="See all cities" onClick={handleSeeAllClicked}>
+          <div className="suggestion-item" onClick={handleSeeAllClicked}>
             <b>See all cities</b>
-          </li>
-        </ul>
+          </div>
+        </div>
       )}
     </div>
   );

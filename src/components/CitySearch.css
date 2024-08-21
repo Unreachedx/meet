@@ -1,0 +1,13 @@
+.city-search-container {
+    padding: 16px;
+    width: 100%;
+    max-width: 20%;
+    margin: 16px auto;
+  }
+  
+  .city-input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
