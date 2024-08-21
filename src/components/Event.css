@@ -13,15 +13,16 @@
     position: absolute;
     bottom: 10px;
     right: 10px;
-    background-color: #e0e0e0;
-    color: #333;
-    border: none; 
-    padding: 8px 16px;
-    cursor: pointer; 
-    font-size: 16px;
-    transition: background-color 0.3s;
+    border: 2px solid #333;
+    border-radius: 4px;
+    padding: 12px 24px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    transition: background-color 0.5s, box-shadow 0.5s;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
   }
   
   .details-button:hover {
-    background-color: #b0b0b0;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
   }

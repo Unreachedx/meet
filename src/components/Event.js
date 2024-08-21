@@ -20,7 +20,7 @@ const Event = ({ event }) => {
       <p>{location}</p>
       {detailsVisible && <p>{description}</p>}
       <button className="details-button" onClick={toggleDetails}>
-        {detailsVisible ? 'Hide Details' : 'Show Details'}
+        {detailsVisible ? 'hide details' : 'show details'}
       </button>
     </div>
   );

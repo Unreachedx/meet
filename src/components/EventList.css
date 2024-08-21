@@ -1,28 +1,9 @@
 .event-content {
     position: relative;
-    border: 2px solid grey;
     padding: 16px;
-    background-color: #f9f9f9;
     text-align: left;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 16px;
-  }
-  
-  .details-button {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    background-color: #e0e0e0;
-    color: #333;
-    border: none;
-    padding: 8px 16px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-  }
-  
-  .details-button:hover {
-    background-color: #b0b0b0;
   }
 
   .event-list-container {
