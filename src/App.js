@@ -13,10 +13,9 @@ const App = () => {
   useEffect(() => {
     getEvents().then(results => {
       setEvents(results);
-    }).catch(error => console.log('An error occurred while fetching events'));
+    }).catch(error => console.error('An error occurred while fetching events:', error));
   }, []);
 
-  // Filter events based on selected city and event count
   const filteredEvents = events
     .filter(event => city === '' || event.location.toLowerCase().includes(city.toLowerCase()))
     .slice(0, eventCount);
@@ -24,8 +23,10 @@ const App = () => {
   return (
     <div className="App">
       <CitySearch allLocations={events.map(event => event.location)} setCity={setCity} />
-      <EventList events={filteredEvents} />
+      
       <NumberOfEvents eventCount={eventCount} setEventCount={setEventCount} />
+      
+      <EventList events={filteredEvents} />
     </div>
   );
 };
