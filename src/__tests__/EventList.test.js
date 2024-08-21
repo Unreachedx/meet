@@ -9,9 +9,13 @@ describe('<EventList /> component', () => {
   });
 });
 
-test('renders correct number of events', () => {
-    const EventListComponent = render(<EventList events={
-      [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]
-    } />);
-    expect(EventListComponent.getAllByRole("listitem")).toHaveLength(4);
+test('has an element with "list" role and renders correct number of events', () => {
+  const events = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
+  const { getByRole, getAllByRole } = render(<EventList events={events} />);
+  
+  // Check for list role
+  expect(getByRole('list')).toBeInTheDocument();
+  
+  // Check number of events
+  expect(getAllByRole('listitem')).toHaveLength(events.length);
 });

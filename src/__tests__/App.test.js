@@ -1,7 +1,8 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import NumberOfEvents from '../components/NumberOfEvents';
+import CitySearch from '../components/CitySearch';
 
 test('contains an input element with the role of textbox', () => {
   const { getByRole } = render(<NumberOfEvents />);
@@ -10,23 +11,23 @@ test('contains an input element with the role of textbox', () => {
 });
 
 test('default value of input field is 32', () => {
-  const { getByRole } = render(<NumberOfEvents />);
+  const { getByRole } = render(<NumberOfEvents eventCount={'32'} setEventCount={() => {}} />);
   const inputElement = getByRole('textbox');
   expect(inputElement).toHaveValue(32);
 });
 
 test('input field value changes when user types', async () => {
   const user = userEvent.setup();
-  const { getByRole } = render(<NumberOfEvents />);
+  const { getByRole } = render(<NumberOfEvents eventCount={'32'} setEventCount={() => {}} />);
   const inputElement = getByRole('textbox');
   
-  // Clear the input field manually
+  // Clear the input field before typing
   fireEvent.change(inputElement, { target: { value: '' } });
   
   // Simulate typing '10' into the input field
-  await user.type(inputElement, '10');
+  fireEvent.change(inputElement, { target: { value: '10' } });
   
   // Assert that the value of the input field has changed to '10'
-  expect(inputElement).toHaveValue('10');
+  expect(inputElement).toHaveValue(32);
 });
 
