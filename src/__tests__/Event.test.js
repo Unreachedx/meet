@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
 import Event from '../components/Event';
 import mockData from '../mock-data';
 
@@ -11,9 +10,9 @@ test('shows event details when "Show Details" button is clicked', () => {
   render(<Event event={event} />);
   
   // Check if the title, start time, and location are present
-  const titleElement = screen.getByText(event.summary); // Assuming summary is the correct prop
-  const startTimeElement = screen.getByText(event.start.dateTime); // Adjust based on actual prop names
-  const locationElement = screen.getByText(event.location); // Adjust based on actual prop names
+  const titleElement = screen.getByText(event.summary); 
+  const startTimeElement = screen.getByText(event.start.dateTime); 
+  const locationElement = screen.getByText(event.location); 
   const buttonElement = screen.getByText('Show Details');
 
   expect(titleElement).toBeInTheDocument();

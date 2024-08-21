@@ -8,20 +8,27 @@ const CitySearch = ({ allLocations, setCity }) => {
   const handleInputChanged = (event) => {
     const value = event.target.value;
     const filteredLocations = allLocations
-      ? allLocations.filter((location) =>
-          location.toUpperCase().indexOf(value.toUpperCase()) > -1
-        )
+      ? Array.from(new Set(
+          allLocations.filter((location) =>
+            location.toUpperCase().includes(value.toUpperCase())
+          )
+        ))
       : [];
 
     setQuery(value);
     setSuggestions(filteredLocations);
   };
 
-  const handleItemClicked = (event) => {
-    const value = event.target.textContent;
-    setQuery(value);
-    setShowSuggestions(false); // Hide the suggestions list
-    setCity(value); // Update the selected city in the parent component
+  const handleSuggestionClicked = (suggestion) => {
+    setQuery(suggestion);
+    setCity(suggestion); // Update the city in the parent component
+    setShowSuggestions(false);
+  };
+
+  const handleSeeAllClicked = () => {
+    setQuery("");
+    setCity(""); // Clear city filter
+    setShowSuggestions(false);
   };
 
   return (
@@ -37,11 +44,14 @@ const CitySearch = ({ allLocations, setCity }) => {
       {showSuggestions && (
         <ul className="suggestions">
           {suggestions.map((suggestion) => (
-            <li onClick={handleItemClicked} key={suggestion}>
+            <li
+              key={suggestion}
+              onClick={() => handleSuggestionClicked(suggestion)}
+            >
               {suggestion}
             </li>
           ))}
-          <li key="See all cities" onClick={handleItemClicked}>
+          <li key="See all cities" onClick={handleSeeAllClicked}>
             <b>See all cities</b>
           </li>
         </ul>

@@ -3,7 +3,7 @@ import React from 'react';
 const NumberOfEvents = ({ eventCount, setEventCount }) => {
   const handleInputChange = (event) => {
     const value = event.target.value;
-    setEventCount(Number(value));
+    setEventCount(Number(value)); // Ensure the value is treated as a number
   };
 
   return (

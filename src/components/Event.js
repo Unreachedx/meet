@@ -2,17 +2,21 @@ import React, { useState } from 'react';
 
 const Event = ({ event }) => {
   const [detailsVisible, setDetailsVisible] = useState(false);
-  const { summary, start: { dateTime, timeZone }, description } = event;
+
+  // Destructuring with fallback values
+  const { summary, start, description, location } = event;
+  const dateTime = start?.dateTime || 'No date/time available';
+  const timeZone = start?.timeZone || 'No timezone available';
 
   const toggleDetails = () => {
-    console.log('Button clicked');
     setDetailsVisible(prevState => !prevState);
   };
 
   return (
     <li>
       <h3>{summary}</h3>
-      <p>{dateTime} {`(${timeZone})`}</p>
+      <p>{dateTime} ({timeZone})</p>
+      <p>{location}</p>
       <button onClick={toggleDetails}>
         {detailsVisible ? 'Hide Details' : 'Show Details'}
       </button>
