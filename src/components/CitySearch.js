@@ -1,37 +1,15 @@
 import React, { useState } from "react";
-import './CitySearch.css';
+import "./CitySearch.css";
 
-const CitySearch = ({ allLocations, setCity }) => {
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const [query, setQuery] = useState("");
-  const [suggestions, setSuggestions] = useState([]);
-
-  const handleInputChanged = (event) => {
-    const value = event.target.value;
-    const filteredLocations = allLocations
-      ? Array.from(new Set(
-          allLocations.filter((location) =>
-            location.toUpperCase().includes(value.toUpperCase())
-          )
-        ))
-      : [];
-
-    setQuery(value);
-    setSuggestions(filteredLocations);
-  };
-
-  const handleSuggestionClicked = (suggestion) => {
-    setQuery(suggestion);
-    setCity(suggestion);
-    setShowSuggestions(false);
-  };
-
-  const handleSeeAllClicked = () => {
-    setQuery("");
-    setCity("");
-    setShowSuggestions(false);
-  };
-
+const CitySearch = ({
+  handleSearchChange,
+  setShowSuggestions,
+  query,
+  showSuggestions,
+  suggestions,
+  handleSuggestionClicked,
+  handleSeeAllClicked,
+}) => {
   return (
     <div className="city-search-container">
       <input
@@ -40,7 +18,7 @@ const CitySearch = ({ allLocations, setCity }) => {
         placeholder="Search for a city"
         value={query}
         onFocus={() => setShowSuggestions(true)}
-        onChange={handleInputChanged}
+        onChange={handleSearchChange}
       />
       {showSuggestions && (
         <div className="suggestions">

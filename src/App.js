@@ -10,24 +10,58 @@ const App = () => {
   const [city, setCity] = useState('');
   const [eventCount, setEventCount] = useState(32);
 
+  const [filteredEvents, setFilteredEvents] = useState(events);
+
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [query, setQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+
   useEffect(() => {
     getEvents().then(results => {
       setEvents(results);
+      setFilteredEvents(results)
     }).catch(error => console.error('An error occurred while fetching events:', error));
   }, []);
 
-  const filteredEvents = events
-    .filter(event => city === '' || event.location.toLowerCase().includes(city.toLowerCase()))
-    .slice(0, eventCount);
+  const handleSearchChange = (e) => {
+    const location = e.target.value;
+    setCity(location);
+
+    const filtered = events.filter((event) =>
+      event.location.toLowerCase().includes(location.toLowerCase())
+    );
+
+    setFilteredEvents(filtered);
+  };
+
+  const handleSeeAllClicked = () => {
+    setQuery("");
+    setCity("");
+    setShowSuggestions(false);
+  };
+
+  const handleSuggestionClicked = (suggestion) => {
+    setQuery(suggestion);
+    setCity(suggestion);
+    setShowSuggestions(false);
+  };
 
   return (
     <div className="App">
       <h1>Meet App</h1>
       <h3>Choose your Nearest City</h3>
-      <CitySearch allLocations={events.map(event => event.location)} setCity={setCity} />
-      <p>Number of Events</p>
+      <CitySearch
+          setCity={setCity} 
+          handleSearchChange={handleSearchChange} 
+          handleSeeAllClicked={handleSeeAllClicked}
+          handleSuggestionClicked={handleSuggestionClicked}
+          showSuggestions={showSuggestions}
+          suggestions={suggestions}
+          setShowSuggestions={setShowSuggestions}
+      />
+
       <NumberOfEvents eventCount={eventCount} setEventCount={setEventCount} />
-      
+
       <EventList events={filteredEvents} />
     </div>
   );
