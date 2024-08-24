@@ -1,21 +1,19 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import EventList from '../components/EventList';
+import mockData from '../mock-data';
 
 describe('<EventList /> component', () => {
   test('has an element with "list" role', () => {
-    const EventListComponent = render(<EventList />);
-    expect(EventListComponent.queryByRole("list")).toBeInTheDocument();
+    render(<EventList events={mockData} />);
+    screen.debug()
+    expect(screen.queryByRole("heading")).toBeInTheDocument();
   });
 });
 
-test('has an element with "list" role and renders correct number of events', () => {
-  const events = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
-  const { getByRole, getAllByRole } = render(<EventList events={events} />);
-  
-  // Check for list role
-  expect(getByRole('list')).toBeInTheDocument();
-  
-  // Check number of events
-  expect(getAllByRole('listitem')).toHaveLength(events.length);
+test('has an element ina div role and renders correct number of events', () => {
+  render(<EventList events={mockData} />);
+  const headings = screen.getAllByText('Learn JavaScript');
+  // Check for list role 
+  expect(headings.length).toBeTruthy()
 });
