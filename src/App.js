@@ -17,21 +17,27 @@ const App = () => {
   const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
-    getEvents().then(results => {
-      setEvents(results);
-      setFilteredEvents(results)
-    }).catch(error => console.error('An error occurred while fetching events:', error));
+    getEvents()
+      .then(results => {
+        setEvents(results);
+        setFilteredEvents(results);
+        setSuggestions([...new Set(results.map(s => s.location))]);
+      })
+      .catch(error => console.error('An error occurred while fetching events:', error));
   }, []);
 
   const handleSearchChange = (e) => {
     const location = e.target.value;
+  
     setCity(location);
-
+  
     const filtered = events.filter((event) =>
       event.location.toLowerCase().includes(location.toLowerCase())
     );
-
+  
     setFilteredEvents(filtered);
+  
+    setSuggestions([...new Set(filtered.map(s => s.location))]);
   };
 
   const handleSeeAllClicked = () => {
