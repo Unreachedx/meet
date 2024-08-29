@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./CitySearch.css";
 
 const CitySearch = ({
@@ -9,7 +9,13 @@ const CitySearch = ({
   suggestions,
   handleSuggestionClicked,
   handleSeeAllClicked,
+  allLocations, // Make sure allLocations is passed as a prop
+  setSuggestions, // Also include setSuggestions as a prop
 }) => {
+  useEffect(() => {
+    setSuggestions(allLocations);
+  }, [allLocations]); // Correctly reference allLocations
+
   return (
     <div className="city-search-container">
       <input

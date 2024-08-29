@@ -40,3 +40,4 @@ test('hides event details when "Hide Details" button is clicked', () => {
   const showButtonElementAgain = screen.getByText('show details');
   expect(showButtonElementAgain).toBeInTheDocument();
 });
+
