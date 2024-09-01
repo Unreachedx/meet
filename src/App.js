@@ -1,7 +1,7 @@
+import React, { useEffect, useState } from 'react';
 import CitySearch from './components/CitySearch';
 import EventList from './components/EventList';
 import NumberOfEvents from './components/NumberOfEvents';
-import React, { useEffect, useState } from 'react';
 import { extractLocations, getEvents } from './api';
 import './App.css';
 
@@ -18,9 +18,9 @@ const App = () => {
   const fetchData = async () => {
     const allEvents = await getEvents();
     const filteredEvents =
-      currentCity === 'See all cities'
-        ? allEvents
-        : allEvents.filter((event) => event.location === currentCity);
+      currentCity === 'See all cities'? 
+      allEvents : 
+      allEvents.filter((event) => event.location === currentCity)
     const currentEvents = await filteredEvents.slice(0, currentNOE);
     setEvents(currentEvents);
     setAllLocations(extractLocations(allEvents));

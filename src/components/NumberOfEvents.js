@@ -7,7 +7,7 @@ const NumberOfEvents = ({ setCurrentNOE }) => {
     let value = e.target.value;
     setNumber(value);
 
-    let errorText = '';
+/*     let errorText = ''; */
 
     // Check if the value is empty, not a number, or less than or equal to 1
     if (value === '' || isNaN(value) || Number(value) <= 0) {
