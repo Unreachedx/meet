@@ -1,32 +1,24 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, within, waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import NumberOfEvents from '../components/NumberOfEvents';
-import CitySearch from '../components/CitySearch';
+import { getEvents } from '../api';
+import App from '../App';
 
-test('contains an input element with the role of textbox', () => {
-  const { getByRole } = render(<NumberOfEvents />);
-  const inputElement = getByRole('spinbutton');
-  expect(inputElement).toBeInTheDocument();
-});
+describe('<App /> component', () => {
+  let AppDOM;
+  beforeEach(() => {
+    AppDOM = render(<App />).container.firstChild;
+  });
 
-test('default value of input field is 32', () => {
-  const { getByRole } = render(<NumberOfEvents eventCount={'32'} setEventCount={() => {}} />);
-  const inputElement = getByRole('spinbutton');
-  expect(inputElement).toHaveValue(32);
-});
+  test('renders list of events', () => {
+    expect(AppDOM.querySelector('#event-list')).toBeInTheDocument();
+  });
 
-test('input field value changes when user types', async () => {
-  const user = userEvent.setup();
-  const { getByRole } = render(<NumberOfEvents eventCount={'32'} setEventCount={() => {}} />);
-  const inputElement = getByRole('spinbutton');
+  test('render CitySearch', () => {
+    expect(AppDOM.querySelector('#city-search-container')).toBeInTheDocument();
+  });
 
-  // Clear the input field before typing
-  fireEvent.change(inputElement, { target: { value: '' } });
-
-  // Simulate typing '10' into the input field
-  fireEvent.change(inputElement, { target: { value: '10' } });
-
-  // Assert that the value of the input field has changed to '10'
-  expect(inputElement).toHaveValue(32);
+  test('render NumberOfEvents', () => {
+    expect(AppDOM.querySelector('.number-of-events-container')).toBeInTheDocument();
+  });
 });

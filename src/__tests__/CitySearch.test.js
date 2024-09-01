@@ -1,101 +1,122 @@
 import React from 'react';
-import { render, fireEvent, screen, waitFor, within, userEvent } from '@testing-library/react';
+import { render, within, waitFor, screen, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import CitySearch from '../components/CitySearch';
-import App from '../App';
 import { extractLocations, getEvents } from '../api';
+import App from '../App';
 
 describe('<CitySearch /> component', () => {
-  let CitySearchComponent;
-  beforeEach(() => {
-    CitySearchComponent = render(<CitySearch allLocations={[]}/>);
-  });
-
   test('renders text input', () => {
-    render(<CitySearch allLocations={[]} setCity={() => {}} />);
-    const cityTextBox = screen.getByRole('textbox');
+    const { queryByRole } = render(
+      <CitySearch
+        allLocations={[]}
+        setCurrentCity={() => {}}
+        setInfoAlert={() => {}}
+      />
+    );
+    const cityTextBox = queryByRole('textbox');
     expect(cityTextBox).toBeInTheDocument();
+    expect(cityTextBox).toHaveClass('city-input');
   });
 
   test('suggestions list is hidden by default', () => {
-    render(<CitySearch allLocations={[]} setCity={() => {}} />);
-    const suggestionList = screen.queryByRole('list');
+    const { queryByRole } = render(
+      <CitySearch
+        allLocations={[]}
+        setCurrentCity={() => {}}
+        setInfoAlert={() => {}}
+      />
+    );
+    const suggestionList = queryByRole('list');
     expect(suggestionList).not.toBeInTheDocument();
   });
 
   test('renders a list of suggestions when city textbox gains focus', async () => {
-    const mockHandleSearchChange = jest.fn();
-    const mockSetShowSuggestions = jest.fn();
-    const mockHandleSuggestionClicked = jest.fn();
-    const mockHandleSeeAllClicked = jest.fn();
-  
-    const suggestions = ['London', 'Los Angeles', 'Lagos'];
-  
-    render(
+    const { queryByRole } = render(
       <CitySearch
-        handleSearchChange={mockHandleSearchChange}
-        setShowSuggestions={mockSetShowSuggestions}
-        query="Lon"
-        showSuggestions={true}
-        suggestions={suggestions}
-        handleSuggestionClicked={mockHandleSuggestionClicked}
-        handleSeeAllClicked={mockHandleSeeAllClicked}
+        allLocations={[]}
+        setCurrentCity={() => {}}
       />
     );
-  
-    const cityTextBox = screen.getByRole('textbox');
-    fireEvent.focus(cityTextBox);
-  
-    const suggestionItems = screen.getAllByText('London');
-    expect(suggestionItems.length).toBeTruthy();
+    const cityTextBox = queryByRole('textbox');
+    await fireEvent.focus(cityTextBox);
+    const suggestionList = queryByRole('list');
+    expect(suggestionList).toBeInTheDocument();
+    expect(suggestionList).toHaveClass('suggestions');
   });
 
   test('updates list of suggestions correctly when user types in city textbox', async () => {
-    const mockHandleSearchChange = jest.fn();
-    const mockSetShowSuggestions = jest.fn();
-    const mockHandleSuggestionClicked = jest.fn();
-    const mockHandleSeeAllClicked = jest.fn();
-  
-    const suggestions = ['London', 'Los Angeles', 'Lagos'];
-    render(
-      <CitySearch
-        handleSearchChange={mockHandleSearchChange}
-        setShowSuggestions={mockSetShowSuggestions}
-        query="Lon"
-        showSuggestions={true}
-        suggestions={suggestions}
-        handleSuggestionClicked={mockHandleSuggestionClicked}
-        handleSeeAllClicked={mockHandleSeeAllClicked}
-      />
-    );
-  
-    const cityTextBox = screen.getByRole('textbox');
-    fireEvent.change(cityTextBox, { target: { value: 'Lagos' } });
-  
-    // Wait for list items to appear
-    await waitFor(() => {
-      const citySuggestion = screen.getByText('Lagos');
-      screen.debug();
-      expect(citySuggestion).toBeTruthy();
-    });
-  });
-});
-
-describe('<CitySearch /> integration', () => {
-  test('renders suggestions list when the app is rendered.', async () => {
     const user = userEvent.setup();
-    const AppComponent = render(<App />);
-    const AppDOM = AppComponent.container.firstChild;
-  
-    const CitySearchDOM = AppDOM.querySelector('#city-search');
-    const cityTextBox = within(CitySearchDOM).queryByRole('textbox');
-    await user.click(cityTextBox);
-  
     const allEvents = await getEvents();
     const allLocations = extractLocations(allEvents);
   
-    await waitFor(() => {
-      const suggestionListItems = >within(CitySearchDOM).queryAllByRole('listitem');
-      expect(suggestionListItems.length).toBe(allLocations.length + 1);
-     });
-   });
+    // Initial render with no locations
+    const { rerender, queryAllByRole } = render(
+      <CitySearch
+        allLocations={[]}
+        setCurrentCity={() => {}}
+      />
+    );
+  
+    // Rerender with actual locations after user types "Berlin"
+    rerender(
+      <CitySearch
+        allLocations={allLocations}
+        setCurrentCity={() => {}}
+      />
+    );
+  
+    const cityTextBox = screen.getByRole('textbox'); // Use screen to query by role
+  
+    // Simulate typing "Berlin" in the city textbox
+    await fireEvent.change(cityTextBox, { target: { value: 'Berlin' } });
+
+    await fireEvent.focus(cityTextBox)
+  
+    // Filter allLocations to those matching "Berlin"
+    const suggestions = allLocations.filter((location) =>
+      location.toUpperCase().includes(cityTextBox.value.toUpperCase())
+    );
+  
+    // Get all <li> elements inside the suggestion list
+    const suggestionListItems = queryAllByRole('listitem');
+  
+    // Expect the number of list items to match the filtered suggestions length + 1 for "See all cities"
+    expect(suggestionListItems).toHaveLength(suggestions.length + 1);
+  
+    // Check that each suggestion matches the text content of the <li> elements
+    for (let i = 0; i < suggestions.length; i += 1) {
+      expect(suggestionListItems[i].textContent).toBe(suggestions[i]);
+    }
   });
+
+  test('renders the suggestion text in the textbox upon clicking on the suggestion', async () => {
+    const user = userEvent.setup();
+    const allEvents = await getEvents();
+    const allLocations = extractLocations(allEvents);
+    const { rerender, queryByRole, queryAllByRole } = render(
+      <CitySearch
+        allLocations={[]}
+        setCurrentCity={() => {}}
+      />
+    );
+
+    rerender(
+      <CitySearch
+        allLocations={allLocations}
+        setCurrentCity={() => {}}
+      />
+    );
+    const cityTextBox = queryByRole('textbox');
+    await fireEvent.change(cityTextBox, { target: { value: 'Berlin' } });
+
+    await fireEvent.focus(cityTextBox)
+
+    // the suggestion's textContent look like this: "Berlin, Germany"
+    const BerlinGermanySuggestion = queryAllByRole('listitem')[0];
+
+    await fireEvent.click(BerlinGermanySuggestion);
+
+    expect(cityTextBox).toHaveValue(BerlinGermanySuggestion.textContent);
+  });
+});

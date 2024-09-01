@@ -1,27 +1,25 @@
 import React, { useState } from 'react';
-import './Event.css';
 
 const Event = ({ event }) => {
-  const [detailsVisible, setDetailsVisible] = useState(false);
-
-  // Destructuring with fallback values
-  const { summary, start, description, location } = event;
-  const dateTime = start?.dateTime || 'No date/time available';
-  const timeZone = start?.timeZone || 'No timezone available';
-
-  const toggleDetails = () => {
-    setDetailsVisible(prevState => !prevState);
-  };
-
+  const [showDetails, setShowDetails] = useState(false);
   return (
-    <div className="event-content">
-      <h3>{summary}</h3>
-      <p>{dateTime} ({timeZone})</p>
-      <p>{location}</p>
-      {detailsVisible && <p>{description}</p>}
-      <button className="details-button" onClick={toggleDetails}>
-        {detailsVisible ? 'hide details' : 'show details'}
-      </button>
+    <div className="event-container">
+      <li className="event">
+        <h2 className="eventHeader">{event && event.summary}</h2>
+        <p>{event && event.location}</p>
+        <p>{event && new Date(event.created).toUTCString()}</p>
+        {showDetails ? (
+          <p className="details">{event && event.description}</p>
+        ) : null}
+        <button
+          className="details-btn"
+          onClick={() => {
+            showDetails ? setShowDetails(false) : setShowDetails(true);
+          }}
+        >
+          {showDetails ? 'hide details' : 'show details'}
+        </button>
+      </li>
     </div>
   );
 };
