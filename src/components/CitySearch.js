@@ -23,7 +23,7 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
     setQuery(value);
     setSuggestions(filteredLocations);
 
-    let infoText = 'Try again';
+    let infoText = '';
 
     if (filteredLocations.length === 0) {
       infoText =

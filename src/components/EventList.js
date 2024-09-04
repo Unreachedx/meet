@@ -5,7 +5,7 @@ import './EventList.css';
 const EventList = ({ events }) => {
   return (
     <div className="event-list-container">
-      <ul className="event-list">
+      <ul id="event-list">
         {events
           ? events.map((event) => (
               <li className="event-content" key={event.id}>

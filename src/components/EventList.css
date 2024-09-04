@@ -8,7 +8,7 @@
   margin: 16px auto;
 }
 
-.event-list {
+#event-list {
   display: flex; /* Make sure list is a flex container */
   flex-direction: column; /* Stack items vertically */
   align-items: center; /* Center items horizontally */
