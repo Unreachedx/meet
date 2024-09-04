@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, within, waitFor, screen } from '@testing-library/react';
+import { render, within, waitFor, screen, userEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { getEvents } from '../api';
 import App from '../App';
@@ -24,6 +24,8 @@ describe('<App /> component', () => {
 });
 
 describe('<App /> integration', () => {
+
+
   test('renders a list of events matching the city selected by the user', async () => {
     const user = userEvent.setup();
     const AppComponent = render(<App />);
@@ -47,9 +49,8 @@ describe('<App /> integration', () => {
     expect(allRenderedEventItems.length).toBe(berlinEvents.length);
 
     allRenderedEventItems.forEach(event => {
-      expect(event.textContent).toContain("Berlin, Germany");
+      expect(event.textContent).toContain("Berlin, Germany")
+      
     });
-
   });
-
 });
