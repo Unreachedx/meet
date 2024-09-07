@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, within, waitFor, screen} from '@testing-library/react';
+import { render, within, waitFor, fireEvent} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { getEvents } from '../api';
 import App from '../App';
@@ -40,7 +40,7 @@ describe('<App /> integration', () => {
     expect(CitySearchInput).toBeInTheDocument(); // Ensure input is found
 
     if (CitySearchInput) {
-      await user.type(CitySearchInput, "Berlin");
+      fireEvent.change(CitySearchInput, { target: { value: 'Berlin' } });
     }
 
     const berlinSuggestionItem = within(CitySearchDOM).queryByText('Berlin, Germany');
