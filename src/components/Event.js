@@ -5,7 +5,7 @@ const Event = ({ event }) => {
   const [showDetails, setShowDetails] = useState(false);
 
   return (
-    <div className="event-container"> {/* Use div or other element */}
+    <div className="event-container" data-testid="event"> {/* Use div or other element */}
       <h2 className="eventHeader">{event && event.summary}</h2>
       <p>{event && event.location}</p>
       <p>{event && new Date(event.created).toUTCString()}</p>

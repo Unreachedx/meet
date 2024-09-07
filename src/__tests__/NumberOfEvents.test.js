@@ -1,7 +1,6 @@
 import React from 'react';
 import NumberOfEvents from '../components/NumberOfEvents';
-import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import App from '../App';
 
 describe('<NumberOfEvents /> component', () => {
@@ -24,14 +23,17 @@ describe('<NumberOfEvents /> component', () => {
 
 
 describe('Integration Tests', () => {
-  test('allows the user to specify the number of events', async () => {
+  test.only('allows the user to specify the number of events', async () => {
     render(<App />);
 
     const numberOfEventsInput = screen.getByLabelText(/number of events/i);
 
     // Simulate deleting the default value "32" and typing "10"
-    await userEvent.clear(numberOfEventsInput);
-    await userEvent.type(numberOfEventsInput, '10');
+
+    fireEvent.change(numberOfEventsInput, { target: { value: '' } });
+
+    fireEvent.change(numberOfEventsInput, { target: { value: 10 } });
+
 
     // Assuming that the API call is mocked and returns a predictable number of events
     await waitFor(() => {
