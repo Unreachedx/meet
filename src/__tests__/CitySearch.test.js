@@ -3,7 +3,6 @@ import { render, within, waitFor, screen, fireEvent } from '@testing-library/rea
 import userEvent from '@testing-library/user-event';
 import CitySearch from '../components/CitySearch';
 import { extractLocations, getEvents } from '../api';
-import App from '../App';
 
 describe('<CitySearch /> component', () => {
   test('renders text input', () => {
