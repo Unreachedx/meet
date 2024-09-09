@@ -1,26 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
+import CitySearch from './components/CitySearch';
+import EventList from './components/EventList';
+import NumberOfEvents from './components/NumberOfEvents';
+import { extractLocations, getEvents } from './api';
 import './App.css';
 
-function App() {
+const App = () => {
+  const [allLocations, setAllLocations] = useState([]);
+  const [currentNOE, setCurrentNOE] = useState(32);
+  const [events, setEvents] = useState([]);
+  const [currentCity, setCurrentCity] = useState('See all cities');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const allEvents = await getEvents();
+      const filteredEvents =
+        currentCity === 'See all cities' 
+          ? allEvents 
+          : allEvents.filter((event) => event.location === currentCity);
+      const currentEvents = filteredEvents.slice(0, currentNOE);
+      setEvents(currentEvents);
+      setAllLocations(extractLocations(allEvents));
+    };
+  
+    fetchData();
+  }, [currentCity, currentNOE]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Meet App</h1>
+      <p className="choose">Choose your nearest city:</p>
+      <CitySearch
+        allLocations={allLocations}
+        setCurrentCity={setCurrentCity}
+      />
+      <NumberOfEvents
+        setCurrentNOE={setCurrentNOE}
+      />
+
+      <EventList events={events} />
     </div>
   );
-}
+};
 
 export default App;
