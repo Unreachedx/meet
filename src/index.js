@@ -10,9 +10,9 @@ atatus.config('09399dcbdfc74e0496140eb21996f65f').install();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-//<React.StrictMode>
+<React.StrictMode>
     <App />
-//</React.StrictMode>
+</React.StrictMode>
 );
 
 // If you want your app to work offline and load faster, you can change
