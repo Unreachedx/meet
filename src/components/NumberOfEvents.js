@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './NumberOfEvents.css';
 
-const NumberOfEvents = ({ setCurrentNOE }) => {
+const NumberOfEvents = ({ setCurrentNOE, setErrorAlert }) => {
   const [number, setNumber] = useState(32);
 
   const handleInputChanged = (e) => {
@@ -10,19 +10,18 @@ const NumberOfEvents = ({ setCurrentNOE }) => {
     // Allow only numbers and limit to 4 digits
     if (/^\d{0,4}$/.test(value)) {
       setNumber(value);
-      setCurrentNOE(value);
     }
 
     let errorText = '';
 
     // Check if the value is empty, not a number, or less than or equal to 0
-    if (value === '' || Number(value) <= 0) {
+    if (isNaN(value) || Number(value) <= 0) {
       errorText = 'Please enter a valid number greater than 0.';
     } else {
-      errorText = '';
+      setCurrentNOE(Number(value)); // Only set number of events if input is valid
     }
 
-    // Handle error display (if you want to show error messages somewhere in your UI)
+    setErrorAlert(errorText);
   };
 
   return (

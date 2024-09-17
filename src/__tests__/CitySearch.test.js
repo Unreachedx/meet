@@ -5,12 +5,14 @@ import CitySearch from '../components/CitySearch';
 import { extractLocations, getEvents } from '../api';
 
 describe('<CitySearch /> component', () => {
+  const mockSetInfoAlert = jest.fn();
+
   test('renders text input', () => {
     const { queryByRole } = render(
       <CitySearch
         allLocations={[]}
         setCurrentCity={() => {}}
-        setInfoAlert={() => {}}
+        setInfoAlert={mockSetInfoAlert} // Pass mock function here
       />
     );
     const cityTextBox = queryByRole('textbox');
@@ -23,7 +25,7 @@ describe('<CitySearch /> component', () => {
       <CitySearch
         allLocations={[]}
         setCurrentCity={() => {}}
-        setInfoAlert={() => {}}
+        setInfoAlert={mockSetInfoAlert} // Pass mock function here
       />
     );
     const suggestionList = queryByRole('list');
@@ -35,6 +37,7 @@ describe('<CitySearch /> component', () => {
       <CitySearch
         allLocations={[]}
         setCurrentCity={() => {}}
+        setInfoAlert={mockSetInfoAlert} // Pass mock function here
       />
     );
     const cityTextBox = queryByRole('textbox');
@@ -48,42 +51,35 @@ describe('<CitySearch /> component', () => {
     const user = userEvent.setup();
     const allEvents = await getEvents();
     const allLocations = extractLocations(allEvents);
-  
-    // Initial render with no locations
+
     const { rerender, queryAllByRole } = render(
       <CitySearch
         allLocations={[]}
         setCurrentCity={() => {}}
+        setInfoAlert={mockSetInfoAlert} // Pass mock function here
       />
     );
-  
-    // Rerender with actual locations after user types "Berlin"
+
     rerender(
       <CitySearch
         allLocations={allLocations}
         setCurrentCity={() => {}}
+        setInfoAlert={mockSetInfoAlert} // Pass mock function here
       />
     );
-  
-    const cityTextBox = screen.getByRole('textbox'); // Use screen to query by role
-  
-    // Simulate typing "Berlin" in the city textbox
-    await fireEvent.change(cityTextBox, { target: { value: 'Berlin' } });
 
-    await fireEvent.focus(cityTextBox)
-  
-    // Filter allLocations to those matching "Berlin"
+    const cityTextBox = screen.getByRole('textbox');
+
+    await fireEvent.change(cityTextBox, { target: { value: 'Berlin' } });
+    await fireEvent.focus(cityTextBox);
+
     const suggestions = allLocations.filter((location) =>
       location.toUpperCase().includes(cityTextBox.value.toUpperCase())
     );
-  
-    // Get all <li> elements inside the suggestion list
+
     const suggestionListItems = queryAllByRole('listitem');
-  
-    // Expect the number of list items to match the filtered suggestions length + 1 for "See all cities"
     expect(suggestionListItems).toHaveLength(suggestions.length + 1);
-  
-    // Check that each suggestion matches the text content of the <li> elements
+
     for (let i = 0; i < suggestions.length; i += 1) {
       expect(suggestionListItems[i].textContent).toBe(suggestions[i]);
     }
@@ -97,6 +93,7 @@ describe('<CitySearch /> component', () => {
       <CitySearch
         allLocations={[]}
         setCurrentCity={() => {}}
+        setInfoAlert={mockSetInfoAlert} // Pass mock function here
       />
     );
 
@@ -104,16 +101,14 @@ describe('<CitySearch /> component', () => {
       <CitySearch
         allLocations={allLocations}
         setCurrentCity={() => {}}
+        setInfoAlert={mockSetInfoAlert} // Pass mock function here
       />
     );
     const cityTextBox = queryByRole('textbox');
     await fireEvent.change(cityTextBox, { target: { value: 'Berlin' } });
+    await fireEvent.focus(cityTextBox);
 
-    await fireEvent.focus(cityTextBox)
-
-    // the suggestion's textContent look like this: "Berlin, Germany"
     const BerlinGermanySuggestion = queryAllByRole('listitem')[0];
-
     await fireEvent.click(BerlinGermanySuggestion);
 
     expect(cityTextBox).toHaveValue(BerlinGermanySuggestion.textContent);

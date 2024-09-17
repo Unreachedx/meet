@@ -3,7 +3,7 @@ import CitySearch from './components/CitySearch';
 import EventList from './components/EventList';
 import NumberOfEvents from './components/NumberOfEvents';
 import { extractLocations, getEvents } from './api';
-import { InfoAlert } from './components/Alert';
+import { InfoAlert, ErrorAlert } from './components/Alert';
 import './App.css';
 
 const App = () => {
@@ -12,6 +12,7 @@ const App = () => {
   const [events, setEvents] = useState([]);
   const [currentCity, setCurrentCity] = useState('See all cities');
   const [infoAlert, setInfoAlert] = useState('');
+  const [errorAlert, setErrorAlert] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,6 +34,7 @@ const App = () => {
       <h1>Meet App</h1>
       <div className="alerts-container">
         {infoAlert.length ? <InfoAlert text={infoAlert}/> : null}
+        {errorAlert.length ? <ErrorAlert text={errorAlert}/> : null}
       </div>
       <p className="choose">Choose your nearest city:</p>
       <CitySearch
@@ -42,6 +44,7 @@ const App = () => {
       />
       <NumberOfEvents
         setCurrentNOE={setCurrentNOE}
+        setErrorAlert={setErrorAlert}
       />
 
       <EventList events={events} />
