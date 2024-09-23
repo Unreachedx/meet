@@ -3,7 +3,7 @@ import CitySearch from './components/CitySearch';
 import EventList from './components/EventList';
 import NumberOfEvents from './components/NumberOfEvents';
 import { extractLocations, getEvents } from './api';
-import { InfoAlert, ErrorAlert } from './components/Alert';
+import { InfoAlert, ErrorAlert, WarningAlert } from './components/Alert';
 import './App.css';
 
 const App = () => {
@@ -25,7 +25,11 @@ const App = () => {
       setEvents(currentEvents);
       setAllLocations(extractLocations(allEvents));
     };
-  
+    if (navigator.onLine) {
+      // set the warning alert message to an empty string ""
+    } else {
+      // set the warning alert message to a non-empty string
+    }
     fetchData();
   }, [currentCity, currentNOE]);
 
@@ -35,6 +39,7 @@ const App = () => {
       <div className="alerts-container">
         {infoAlert.length ? <InfoAlert text={infoAlert}/> : null}
         {errorAlert.length ? <ErrorAlert text={errorAlert}/> : null}
+        {errorAlert.length ? <WarningAlert text={errorAlert}/> : null}
       </div>
       <p className="choose">Choose your nearest city:</p>
       <CitySearch
