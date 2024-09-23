@@ -4,6 +4,7 @@ import EventList from './components/EventList';
 import NumberOfEvents from './components/NumberOfEvents';
 import { extractLocations, getEvents } from './api';
 import { InfoAlert, ErrorAlert, WarningAlert } from './components/Alert';
+import CityEventsChart from './components/CityEventsChart';
 import './App.css';
 
 const App = () => {
@@ -13,6 +14,7 @@ const App = () => {
   const [currentCity, setCurrentCity] = useState('See all cities');
   const [infoAlert, setInfoAlert] = useState('');
   const [errorAlert, setErrorAlert] = useState('');
+  const [warningAlert, setWarningAlert] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,11 +27,13 @@ const App = () => {
       setEvents(currentEvents);
       setAllLocations(extractLocations(allEvents));
     };
+  
     if (navigator.onLine) {
-      // set the warning alert message to an empty string ""
+      setWarningAlert(''); // Clear warning if online
     } else {
-      // set the warning alert message to a non-empty string
+      setWarningAlert('You are currently offline! Events may not be up to date.'); // Set warning if offline
     }
+  
     fetchData();
   }, [currentCity, currentNOE]);
 
@@ -37,24 +41,19 @@ const App = () => {
     <div className="App">
       <h1>Meet App</h1>
       <div className="alerts-container">
-        {infoAlert.length ? <InfoAlert text={infoAlert}/> : null}
-        {errorAlert.length ? <ErrorAlert text={errorAlert}/> : null}
-        {errorAlert.length ? <WarningAlert text={errorAlert}/> : null}
+        {infoAlert.length ? <InfoAlert text={infoAlert} /> : null}
+        {warningAlert.length ? <WarningAlert text={warningAlert} /> : null}
+        {errorAlert.length ? <ErrorAlert text={errorAlert} /> : null}
       </div>
-      <p className="choose">Choose your nearest city:</p>
       <CitySearch
         allLocations={allLocations}
         setCurrentCity={setCurrentCity}
-        setInfoAlert={setInfoAlert}
-      />
-      <NumberOfEvents
-        setCurrentNOE={setCurrentNOE}
-        setErrorAlert={setErrorAlert}
-      />
-
+        setInfoAlert={setInfoAlert} />
+      <NumberOfEvents setCurrentNOE={setCurrentNOE} setErrorAlert={setErrorAlert} />
+      <CityEventsChart allLocations={allLocations} events={events} />
       <EventList events={events} />
     </div>
-  );
+ );
 };
 
 export default App;
