@@ -8,7 +8,16 @@ import {
   ResponsiveContainer
 } from 'recharts';
 
-const CityEventsChart = () => {
+const CityEventsChart = ({ allLocations, events }) => {
+
+  const getData = () => {
+    const data = allLocations.map((location) => {
+    const count = events.filter((event) => event.location === location).length
+      const city = location.split(', ')[0]
+      return { count, number };
+    })
+    return data;
+  };
 }
 
 export default CityEventsChart;
