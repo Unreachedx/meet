@@ -16,19 +16,24 @@ const CitySearch = ({ allLocations, setCurrentCity, setInfoAlert }) => {
 
   const handleInputChanged = (event) => {
     const value = event.target.value;
+  
+    // Use a regular expression to allow only letters (both uppercase and lowercase)
+    const lettersOnlyValue = value.replace(/[^a-zA-Z\s]/g, '');
+  
     const filteredLocations = allLocations
       ? allLocations.filter((location) => {
-          return location.toUpperCase().indexOf(value.toUpperCase()) > -1;
+          return location.toUpperCase().indexOf(lettersOnlyValue.toUpperCase()) > -1;
         })
       : [];
-    setQuery(value);
+  
+    setQuery(lettersOnlyValue);
     setSuggestions(filteredLocations);
-
+  
     let infoText;
     if (filteredLocations.length === 0) {
-      infoText = "We can not find the city you are looking for. Please try another city"
+      infoText = "We can not find the city you are looking for. Please try another city";
     } else {
-      infoText = ""
+      infoText = "";
     }
     setInfoAlert(infoText);
   };
